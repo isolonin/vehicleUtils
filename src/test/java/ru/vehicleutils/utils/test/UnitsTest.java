@@ -16,7 +16,9 @@ public class UnitsTest {
     }
 
     @Test
-    public void testFormats(){        
+    public void testFormats(){
+        assertTrue(isFillFull(getVehicleNumberByText("0 6 4 7 андрей сергей 52")));
+        
         assertTrue(getVehicleNumberByText("анна ильина владимир 3 2 1 5 2") == null);
         
         assertTrue(isFillFull(getVehicleNumberByText("тараз станислав 3 1 2  алена 1 5 2")));
