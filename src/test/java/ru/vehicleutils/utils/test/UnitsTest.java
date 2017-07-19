@@ -17,6 +17,17 @@ public class UnitsTest {
 
     @Test
     public void testFormats(){        
+        assertTrue(getVehicleNumberByText("анна ильина владимир 3 2 1 5 2") == null);
+        
+        assertTrue(isFillFull(getVehicleNumberByText("тараз станислав 3 1 2  алена 1 5 2")));
+        assertTrue(isFillFull(getVehicleNumberByText("тараз станислав алена 3 1 2 1 5 2")));
+        assertTrue(isFillFull(getVehicleNumberByText("тараз станислав алена 3 1 2 1 5 2")));
+        assertTrue(isFillFull(getVehicleNumberByText("3 1 2 тараз станислав алена 1 5 2")));
+        assertTrue(isFillWithoutReg(getVehicleNumberByText("тараз 3 1 2 станислав алена")));
+        assertTrue(isFillWithoutReg(getVehicleNumberByText("тараз станислав 3 1 2  алена")));
+        assertTrue(isFillWithoutReg(getVehicleNumberByText("тараз станислав алена 3 1 2")));
+        assertTrue(isFillWithoutReg(getVehicleNumberByText("3 1 2 тараз станислав алена")));        
+        
         assertTrue(isFillFull(getVehicleNumberByText("тараз станислав 312  алена 152")));
         assertTrue(isFillFull(getVehicleNumberByText("тараз станислав алена 312 152")));
         assertTrue(isFillFull(getVehicleNumberByText("тараз станислав алена 312152")));

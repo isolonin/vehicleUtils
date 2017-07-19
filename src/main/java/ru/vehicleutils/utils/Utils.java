@@ -64,8 +64,12 @@ public class Utils {
         return null;
     }
     
+    private static String[] getPartsByText(String text){
+        return text.replaceAll("  ", " ").replaceAll("(?<=\\d) +(?=\\d)", "").split(" ");
+    }
+    
     private static boolean isShortFormat(String text){
-        String[] parts = text.replaceAll("  ", " ").split(" ");
+        String[] parts = getPartsByText(text);
         StringBuilder alphaCharsSet = new StringBuilder();
         for(String part:parts){
             if(part.matches("^["+alphaChars+"]*$")){
@@ -76,7 +80,7 @@ public class Utils {
     }
     
     public static String textToVehicleNumber(String text){
-        String[] parts = text.replaceAll("  ", " ").split(" ");
+        String[] parts = getPartsByText(text);
         
         if(parts.length >= 3){            
             //Если номер в коротком формате "аc 2919 152" или "х 291 вт 152"
