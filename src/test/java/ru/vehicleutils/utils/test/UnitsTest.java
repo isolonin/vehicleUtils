@@ -17,18 +17,39 @@ public class UnitsTest {
 
     @Test
     public void testFormats(){
-        assertTrue(isFillFull(getVehicleNumberByText("0 6 4 7 андрей сергей 52")));
+        assertTrue(isFillFull(getVehicleNumberByText("3 1 2 тараз станислав алена 1 5 2"), "тса", 312, 152));
+        assertTrue(isFillFull(getVehicleNumberByText("тараз станислав 3 1 2  алена 1 5 2"), "тса", 312, 152));
+        assertTrue(isFillFull(getVehicleNumberByText("тараз станислав алена 3 1 2 1 5 2"), "тса", 312, 152));
+        assertTrue(isFillFull(getVehicleNumberByText("тараз станислав алена 3 1 2 1 5 2"), "тса", 312, 152));
         
-        assertTrue(getVehicleNumberByText("анна ильина владимир 3 2 1 5 2") == null);
+        assertTrue(isFillFull(getVehicleNumberByText("3 1 2 тараз станислав алена 1 5 2 1"), "тса", 312, 152));
+        assertTrue(isFillFull(getVehicleNumberByText("тараз станислав 3 1 2  алена 1 5 2 2"), "тса", 312, 152));
+        assertTrue(isFillFull(getVehicleNumberByText("тараз станислав алена 3 1 2 1 5 2 3"), "тса", 312, 152));
+        assertTrue(isFillFull(getVehicleNumberByText("тараз станислав алена 3 1 2 1 5 2 4 текстовое сообщение"), "тса", 312, 152));
         
-        assertTrue(isFillFull(getVehicleNumberByText("тараз станислав 3 1 2  алена 1 5 2")));
-        assertTrue(isFillFull(getVehicleNumberByText("тараз станислав алена 3 1 2 1 5 2")));
-        assertTrue(isFillFull(getVehicleNumberByText("тараз станислав алена 3 1 2 1 5 2")));
-        assertTrue(isFillFull(getVehicleNumberByText("3 1 2 тараз станислав алена 1 5 2")));
         assertTrue(isFillWithoutReg(getVehicleNumberByText("тараз 3 1 2 станислав алена")));
         assertTrue(isFillWithoutReg(getVehicleNumberByText("тараз станислав 3 1 2  алена")));
         assertTrue(isFillWithoutReg(getVehicleNumberByText("тараз станислав алена 3 1 2")));
-        assertTrue(isFillWithoutReg(getVehicleNumberByText("3 1 2 тараз станислав алена")));        
+        assertTrue(isFillWithoutReg(getVehicleNumberByText("3 1 2 тараз станислав алена")));
+        
+        assertTrue(isFillFull(getVehicleNumberByText("тараз станислав 3 1 2  алена 1 5 2")));
+        
+        assertTrue(isFillFull(getVehicleNumberByText("к432ов52 4 Текст FUCK тестового123 сО0бщения"), "ков", 432, 52));
+        assertTrue(isFillFull(getVehicleNumberByText("к 4 3 2 о в 5 2 4 Текст FUCK тестового123 сО0бщения"), "ков", 432, 52));
+        
+        assertTrue(isFillFull(getVehicleNumberByText("ков432 52"), "ков", 432, 52));
+        assertTrue(isFillFull(getVehicleNumberByText("к432ов52"), "ков", 432, 52));        
+        assertTrue(isFillFull(getVehicleNumberByText("ков43252"), "ков", 432, 52));
+        assertTrue(isFillFull(getVehicleNumberByText("432ков52"), "ков", 432, 52));
+        assertTrue(isFillFull(getVehicleNumberByText("ко432в52"), "ков", 432, 52));
+        
+        assertTrue(isFillFull(getVehicleNumberByText("к о в 432 52")));
+        assertTrue(isFillFull(getVehicleNumberByText("к 4 3 2 о в 5 2")));        
+        assertTrue(isFillFull(getVehicleNumberByText("к о в 4 3 2 5 2")));
+        assertTrue(isFillFull(getVehicleNumberByText(" 4 3 2 к о в 5  2  ")));
+        assertTrue(isFillFull(getVehicleNumberByText(" к о 4 3 2 в 5 2  ")));
+        
+        assertTrue(getVehicleNumberByText("анна ильина владимир 3 2 1 5 2") == null);
         
         assertTrue(isFillFull(getVehicleNumberByText("тараз станислав 312  алена 152")));
         assertTrue(isFillFull(getVehicleNumberByText("тараз станислав алена 312 152")));
@@ -73,6 +94,17 @@ public class UnitsTest {
         if(vehicleNumberByText.getTransportChars() != null && 
                 vehicleNumberByText.getTransportId()!= null){
             return true;
+        }
+        return false;
+    }
+    
+    private boolean isFillFull(VehicleNumber vehicleNumberByText, String alpha, Integer id, Integer reg){
+        if(isFillFull(vehicleNumberByText)){
+            if(vehicleNumberByText.getTransportChars().equalsIgnoreCase(alpha) &&
+                    vehicleNumberByText.getTransportId().equals(id) &&
+                    vehicleNumberByText.getTransportReg().equals(reg)){
+                return true;
+            }
         }
         return false;
     }
