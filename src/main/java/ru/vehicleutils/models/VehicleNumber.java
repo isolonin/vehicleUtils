@@ -5,13 +5,15 @@ package ru.vehicleutils.models;
  * @author ivan
  */
 public class VehicleNumber implements Comparable<VehicleNumber>{
-    private String transportId;
+    private Integer transportId;
     private String transportChars;
     private Integer transportReg;
     
     public VehicleNumber(String transportChars, String transportId, String transportReg) {
         this.transportChars = transportChars;
-        this.transportId = transportId;
+        if(transportId != null){
+            this.transportId = new Integer(transportId);
+        }        
         if(transportReg != null){
             this.transportReg = new Integer(transportReg);
         }        
@@ -28,11 +30,11 @@ public class VehicleNumber implements Comparable<VehicleNumber>{
         return cost;
     }
 
-    public String getTransportId() {
+    public Integer getTransportId() {
         return transportId;
     }
 
-    public void setTransportId(String transportId) {
+    public void setTransportId(Integer transportId) {
         this.transportId = transportId;
     }
 
