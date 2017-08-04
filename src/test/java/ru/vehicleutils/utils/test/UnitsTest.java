@@ -127,7 +127,7 @@ public class UnitsTest {
     private boolean isFillFull(VehicleNumber vehicleNumberByText, String alpha, Integer id, Integer reg){
         if(isFillFull(vehicleNumberByText)){
             if(vehicleNumberByText.getTransportChars().equalsIgnoreCase(alpha) &&
-                    vehicleNumberByText.getTransportId().equals(id) &&
+                    vehicleNumberByText.getTransportId().equals(id.toString()) &&
                     vehicleNumberByText.getTransportReg().equals(reg)){
                 return true;
             }
