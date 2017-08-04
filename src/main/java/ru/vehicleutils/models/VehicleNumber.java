@@ -8,6 +8,7 @@ public class VehicleNumber implements Comparable<VehicleNumber>{
     private Integer transportId;
     private String transportChars;
     private Integer transportReg;
+    private String textTail;
     
     public VehicleNumber(String transportChars, String transportId, String transportReg) {
         this.transportChars = transportChars;
@@ -16,7 +17,7 @@ public class VehicleNumber implements Comparable<VehicleNumber>{
         }        
         if(transportReg != null){
             this.transportReg = new Integer(transportReg);
-        }        
+        }
     }
 
     public VehicleNumber() {
@@ -54,14 +55,21 @@ public class VehicleNumber implements Comparable<VehicleNumber>{
         this.transportReg = transportReg;
     }
 
+    public String getTextTail() {
+        return textTail;
+    }
+
+    public void setTextTail(String textTail) {
+        this.textTail = textTail;
+    }
+
     @Override
     public String toString() {
-        return "transportId: "+transportId+", transportChars: "+transportChars+", transportReg: "+transportReg;
+        return "transportId: "+transportId+", transportChars: "+transportChars+", transportReg: "+transportReg+", text: "+textTail;
     }
 
     @Override
     public int compareTo(VehicleNumber t) {
         return this.getCost().compareTo(t.getCost());
     }
-    
 }

@@ -3,6 +3,7 @@ package ru.vehicleutils.utils.test;
 import static org.junit.Assert.*;
 import org.junit.Test;
 import ru.vehicleutils.models.VehicleNumber;
+import static ru.vehicleutils.utils.Utils.getMessagePart;
 import static ru.vehicleutils.utils.Utils.getVehicleNumberByText;
 
 /**
@@ -17,6 +18,27 @@ public class UnitsTest {
 
     @Test
     public void testFormats(){
+        assertTrue(isFillFull(getVehicleNumberByText("к 4 3 2 о в 5 2 4 Текст FUCK тестового123 сО0бщения"), "ков", 432, 52, "4 Текст FUCK тестового123 сО0бщения"));
+        assertTrue(isFillFull(getVehicleNumberByText("тараз станислав алена 3 1 2 1 5 2 4 текстовое сообщение"), "тса", 312, 152, "4 текстовое сообщение"));
+        
+        assertTrue(getMessagePart(getVehicleNumberByText("  к 4 3 2 о в 5 2 4 Текст FUCK тестового123 сО0бщения"),
+                "  к 4 3 2 о в 5 2 4 Текст FUCK тестового123 сО0бщения").equals("4 Текст FUCK тестового123 сО0бщения"));
+        assertTrue(getMessagePart(getVehicleNumberByText("тараз станислав алена 3 1 2 1 5 2 4 текстовое сообщение"),
+                "тараз станислав алена 3 1 2 1 5 2 4 текстовое сообщение").equals("4 текстовое сообщение"));
+        assertTrue(getMessagePart(getVehicleNumberByText("к 4 3 2 о в 5 21"),"к 4 3 2 о в 5 21").equals("1"));
+        assertTrue(getMessagePart(getVehicleNumberByText("  к 4 3 2 о в 5 2"),
+                "  к 4 3 2 о в 5 2") == null);
+        assertTrue(getMessagePart(getVehicleNumberByText("  к 4 3 2 о в 5 2 "),
+                "  к 4 3 2 о в 5 2 ").equals(""));
+
+        assertTrue(isFillWithoutReg(getVehicleNumberByText("291 хвт")));
+        assertTrue(isFillWithoutReg(getVehicleNumberByText("х 291 вт")));        
+        assertTrue(isFillWithoutReg(getVehicleNumberByText("хвт 291")));
+        
+        assertTrue(isFillFull(getVehicleNumberByText("а c 2 9 1 9 1 5 21тестовое сообщение")));
+        assertTrue(isFillFull(getVehicleNumberByText("а 2919 c 15211223")));
+        assertTrue(isFillFull(getVehicleNumberByText("2 9 1 9   аc 1  5 2 s s dasd asdasdasf")));
+
         assertTrue(isFillFull(getVehicleNumberByText("3 1 2 тараз станислав алена 1 5 2"), "тса", 312, 152));
         assertTrue(isFillFull(getVehicleNumberByText("тараз станислав 3 1 2  алена 1 5 2"), "тса", 312, 152));
         assertTrue(isFillFull(getVehicleNumberByText("тараз станислав алена 3 1 2 1 5 2"), "тса", 312, 152));
@@ -77,14 +99,11 @@ public class UnitsTest {
         assertTrue(isFillFull(getVehicleNumberByText("291 хвт 152")));
         assertTrue(isFillFull(getVehicleNumberByText("хвт 291 152")));
         
-        assertTrue(isFillWithoutReg(getVehicleNumberByText("х 291 вт")));
-        assertTrue(isFillWithoutReg(getVehicleNumberByText("291 хвт")));
-        assertTrue(isFillWithoutReg(getVehicleNumberByText("хвт 291")));
-        
         assertTrue(getVehicleNumberByText("Проверка 152") == null);
         assertTrue(getVehicleNumberByText("") == null);
         assertTrue(getVehicleNumberByText(" ") == null);
         assertTrue(getVehicleNumberByText("asdasdasd") == null);
+        assertTrue(getVehicleNumberByText("авек1234") == null);
     }
     
     private boolean isFillWithoutReg(VehicleNumber vehicleNumberByText){
@@ -94,6 +113,13 @@ public class UnitsTest {
         if(vehicleNumberByText.getTransportChars() != null && 
                 vehicleNumberByText.getTransportId()!= null){
             return true;
+        }
+        return false;
+    }
+    
+    private boolean isFillFull(VehicleNumber vehicleNumberByText, String alpha, Integer id, Integer reg, String Text){
+        if(isFillFull(vehicleNumberByText) && isFillFull(vehicleNumberByText,alpha, id, reg)){
+            return vehicleNumberByText.getTextTail().equals(Text);
         }
         return false;
     }
