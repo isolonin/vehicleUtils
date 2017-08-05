@@ -156,7 +156,7 @@ public class Utils {
     
     public static String getMessagePart(VehicleNumber vehicleNumber, String text){
         String transportChars = vehicleNumber.getTransportChars();
-        String transportId = vehicleNumber.getTransportId().toString();
+        String transportId = vehicleNumber.getTransportId();
         String transportReg = vehicleNumber.getTransportReg() != null?vehicleNumber.getTransportReg().toString():"";
 
         String coincidenceString = transportChars+transportId+transportReg;
@@ -178,7 +178,7 @@ public class Utils {
                 }
             }
             if(coincidenceList.isEmpty()){
-                return text.substring(i+1).replaceFirst("^ ", "");
+                return text.substring(i+1).replaceAll("^[ ]+", "");
             }
         }
         return null;
